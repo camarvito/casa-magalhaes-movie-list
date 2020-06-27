@@ -6,9 +6,9 @@
                 type="text"
                 class="search__input"
                 placeholder="Search movies"
-                v-model="searchText"
+                v-model="searchInput"
             />
-            <button class="search__button">
+            <button class="search__button" @click="searchMovie">
                 <svg class="search__icon">
                     <use xlink:href="@/assets/svg/sprite.svg#search"></use>
                 </svg>
@@ -25,16 +25,27 @@
 </template>
 
 <script>
+import bus from '@/bus'
+
 export default {
-    data() {
-        return {
-            searchText: ''
-        }
-    },
     computed: {
         isMoviePage() {
             if (this.$route.params.id) return true
             else false
+        },
+        searchInput: {
+            get() {
+                return this.$store.state.searchInput
+            },
+            set(value) {
+                // Em um projeto real não é uma boa prática. Ideal: refatorar p/ uma mutation
+                this.$store.state.searchInput = value
+            }
+        }
+    },
+    methods: {
+        searchMovie() {
+            bus.$emit('searchTriggered')
         }
     }
 }

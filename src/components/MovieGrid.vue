@@ -1,5 +1,5 @@
 <template>
-    <div class="movie-grid">
+    <div class="movie-grid" @search="getMovies">
         <MovieCard
             v-for="movie in movies"
             :key="movie.id"
@@ -23,6 +23,8 @@
 
 <script>
 import axios from 'axios'
+import bus from '@/bus'
+
 import MovieCard from './MovieCard'
 
 export default {
@@ -71,8 +73,16 @@ export default {
                     ? (this.sliceEnd = 20)
                     : (this.sliceEnd -= 10)
             }
-            // const url = 'https://api.themoviedb.org/3/search/movie?api_key=64b38e386e59e75bcda8fe947b4f9be2&query=Shrek&page=1'
-            const url = `https://api.themoviedb.org/3/movie/top_rated?api_key=64b38e386e59e75bcda8fe947b4f9be2&language=en-US&page=${this.reqPage}`
+
+            /* Monta a URL de pesquisa */
+            let url
+
+            if (this.$store.state.searchInput) {
+                url = `https://api.themoviedb.org/3/search/movie?api_key=64b38e386e59e75bcda8fe947b4f9be2&query=${this.$store.state.searchInput}&page=${this.reqPage}`
+            } else {
+                url = `https://api.themoviedb.org/3/movie/top_rated?api_key=64b38e386e59e75bcda8fe947b4f9be2&language=en-US&page=${this.reqPage}`
+            }
+
             axios
                 .get(url)
                 .then(
@@ -85,6 +95,9 @@ export default {
                 .then(list => list.sort(this.dynamicSort('title')))
                 .then(() => {})
         }
+    },
+    created() {
+        bus.$on('searchTriggered', this.getMovies)
     },
     mounted() {
         this.getMovies()

@@ -33,7 +33,7 @@ export default {
 
     width: 20rem;
     height: 30rem;
-    // background-color: #262626;
+
     border-radius: 0.3rem;
     overflow: hidden;
 
@@ -77,23 +77,6 @@ export default {
     &:hover &__side--back {
         transform: rotateY(0deg);
     }
-
-    // &__back {
-    //     transform: rotateY(180deg);
-    //     display: flex;
-    //     flex-direction: column;
-    //     height: 100%;
-    //     align-items: center;
-    //     justify-content: center;
-    // }
-
-    // &:hover &__back {
-    //     transform: rotateY(-180deg);
-    // }
-
-    // &:hover &__front {
-    //     transform: rotateY(0deg);
-    // }
 }
 
 .card {
