@@ -7,6 +7,7 @@
                 class="search__input"
                 placeholder="Search movies"
                 v-model="searchInput"
+                @keyup.enter="searchMovie"
             />
             <button class="search__button" @click="searchMovie">
                 <svg class="search__icon">

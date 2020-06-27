@@ -8,16 +8,13 @@
             :image="movie.poster_path"
             :rating="movie.vote_average"
         />
+        <h1 v-if="!movies.length">No results!</h1>
         <button
             @click="getMovies(0)"
             v-if="this.reqPage != 1 || this.sliceStart != 0"
             style="grid-column: 2"
-        >
-            &larr; Previous Page
-        </button>
-        <button @click="getMovies(1)" style="grid-column: 4">
-            Next page &rarr;
-        </button>
+        >&larr; Previous Page</button>
+        <button @click="getMovies(1)" style="grid-column: 4">Next page &rarr;</button>
     </div>
 </template>
 
